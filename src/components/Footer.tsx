@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { GitHub, Mail, Link as LinkIcon } from 'lucide-react';
+import { Github, Mail, Link as LinkIcon } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
                 className="p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
                 aria-label="GitHub"
               >
-                <GitHub className="w-5 h-5" />
+                <Github className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
