@@ -79,119 +79,32 @@ export const modelData: ModelData[] = [
     ]
   },
   {
-    id: "logistic-regression",
-    name: "Logistic Regression",
-    shortName: "LogReg",
-    color: "#DC2626", // Red
-    description: "A statistical model that uses a logistic function to model a binary dependent variable. In our implementation, we use it to predict whether Apple stock will rise or fall on the next trading day.",
+    id: "cnn",
+    name: "Convolutional Neural Network",
+    shortName: "CNN",
+    color: "#F97316", // Orange
+    description: "A deep learning algorithm that can take an input image, assign importance to various aspects, and differentiate one from the other. Our CNN model treats stock price sequences as 1D images to identify patterns for prediction.",
     metrics: {
-      accuracy: 0.82,
-      mse: 0.036,
-      mae: 0.148,
-      rmse: 0.189,
-      r2: 0.82
+      accuracy: 0.88,
+      mse: 0.029,
+      mae: 0.132,
+      rmse: 0.17,
+      r2: 0.88
     },
     features: [
-      "Binary classification model",
-      "Probabilistic predictions",
-      "Simple and interpretable"
+      "Convolutional layers for pattern recognition",
+      "Feature extraction capabilities",
+      "Deep architecture"
     ],
     advantages: [
-      "Provides probability scores",
-      "Works well for classification tasks",
-      "Quick to train and implement"
+      "Automatically detects important features",
+      "Reduces number of parameters compared to fully connected networks",
+      "Effective at capturing local patterns"
     ],
     limitations: [
-      "Only suitable for binary classification",
-      "Assumes linear decision boundary",
-      "May underperform with non-linear relationships"
-    ]
-  },
-  {
-    id: "naive-bayes",
-    name: "Naive Bayes",
-    shortName: "NB",
-    color: "#0D9488", // Teal
-    description: "A probabilistic classifier based on applying Bayes' theorem with strong independence assumptions between the features. Our model uses Bernoulli Naive Bayes specifically tuned for stock market prediction.",
-    metrics: {
-      accuracy: 0.78,
-      mse: 0.041,
-      mae: 0.159,
-      rmse: 0.202,
-      r2: 0.78
-    },
-    features: [
-      "Probabilistic classifier",
-      "Works with small datasets",
-      "Fast training and inference"
-    ],
-    advantages: [
-      "Simple to implement",
-      "Works well with high-dimensional data",
-      "Requires less training data"
-    ],
-    limitations: [
-      "Assumes feature independence",
-      "May be outperformed by more complex models",
-      "Sensitive to feature selection"
-    ]
-  },
-  {
-    id: "knn",
-    name: "K-Nearest Neighbors",
-    shortName: "KNN",
-    color: "#CA8A04", // Yellow
-    description: "A non-parametric method used for classification and regression. Our KNN implementation uses clusters of similar price patterns to predict future Apple stock movements.",
-    metrics: {
-      accuracy: 0.81,
-      mse: 0.038,
-      mae: 0.152,
-      rmse: 0.195,
-      r2: 0.81
-    },
-    features: [
-      "Instance-based learning",
-      "No training phase",
-      "Adapts to new data easily"
-    ],
-    advantages: [
-      "Simple and intuitive algorithm",
-      "No assumptions about data distribution",
-      "Works well with multi-class problems"
-    ],
-    limitations: [
-      "Computationally expensive for large datasets",
-      "Sensitive to irrelevant features",
-      "Requires feature scaling"
-    ]
-  },
-  {
-    id: "ann",
-    name: "Artificial Neural Network",
-    shortName: "ANN",
-    color: "#4F46E5", // Indigo
-    description: "A computational model inspired by the human brain's neural structure. Our ANN model for Apple stock prediction uses multiple hidden layers with ReLU activation functions to capture complex patterns.",
-    metrics: {
-      accuracy: 0.91,
-      mse: 0.021,
-      mae: 0.112,
-      rmse: 0.145,
-      r2: 0.91
-    },
-    features: [
-      "Multi-layer architecture",
-      "Non-linear modeling capabilities",
-      "Adaptive learning"
-    ],
-    advantages: [
-      "Can model complex non-linear relationships",
-      "Highly adaptable to different data types",
-      "Performs well with large datasets"
-    ],
-    limitations: [
-      "Requires significant training data",
-      "Computationally intensive",
-      "Black box nature makes interpretation difficult"
+      "Requires large amounts of data",
+      "Computationally expensive to train",
+      "Complex to implement and tune"
     ]
   },
   {
@@ -224,61 +137,32 @@ export const modelData: ModelData[] = [
     ]
   },
   {
-    id: "cnn",
-    name: "Convolutional Neural Network",
-    shortName: "CNN",
-    color: "#F97316", // Orange
-    description: "A deep learning algorithm that can take an input image, assign importance to various aspects, and differentiate one from the other. Our CNN model treats stock price sequences as 1D images to identify patterns for prediction.",
+    id: "knn",
+    name: "K-Nearest Neighbors",
+    shortName: "KNN",
+    color: "#CA8A04", // Yellow
+    description: "A non-parametric method used for classification and regression. Our KNN implementation uses clusters of similar price patterns to predict future Apple stock movements.",
     metrics: {
-      accuracy: 0.88,
-      mse: 0.029,
-      mae: 0.132,
-      rmse: 0.17,
-      r2: 0.88
+      accuracy: 0.81,
+      mse: 0.038,
+      mae: 0.152,
+      rmse: 0.195,
+      r2: 0.81
     },
     features: [
-      "Convolutional layers for pattern recognition",
-      "Feature extraction capabilities",
-      "Deep architecture"
+      "Instance-based learning",
+      "No training phase",
+      "Adapts to new data easily"
     ],
     advantages: [
-      "Automatically detects important features",
-      "Reduces number of parameters compared to fully connected networks",
-      "Effective at capturing local patterns"
+      "Simple and intuitive algorithm",
+      "No assumptions about data distribution",
+      "Works well with multi-class problems"
     ],
     limitations: [
-      "Requires large amounts of data",
-      "Computationally expensive to train",
-      "Complex to implement and tune"
-    ]
-  },
-  {
-    id: "lstm",
-    name: "Long Short-Term Memory",
-    shortName: "LSTM",
-    color: "#0284C7", // Sky Blue
-    description: "A special kind of recurrent neural network capable of learning long-term dependencies in sequence prediction problems. Our LSTM model is specifically designed to capture temporal patterns in Apple stock prices.",
-    metrics: {
-      accuracy: 0.93,
-      mse: 0.018,
-      mae: 0.105,
-      rmse: 0.134,
-      r2: 0.93
-    },
-    features: [
-      "Specialized for sequence data",
-      "Can remember long-term patterns",
-      "Effective for time series"
-    ],
-    advantages: [
-      "Excellent for time-series data",
-      "Can capture temporal dependencies",
-      "Resistant to vanishing gradient problem"
-    ],
-    limitations: [
-      "Computationally expensive",
-      "Requires large amounts of data",
-      "Complex to implement and tune properly"
+      "Computationally expensive for large datasets",
+      "Sensitive to irrelevant features",
+      "Requires feature scaling"
     ]
   }
 ];
