@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SpinWheel from '../components/SpinWheel';
 import TradingBackground from '../components/TradingBackground';
+import LivePrediction from '../components/LivePrediction';
 import { modelData } from '../data/models';
 
 const Index: React.FC = () => {
@@ -49,6 +50,11 @@ const Index: React.FC = () => {
             >
               Learn More
             </a>
+          </div>
+          
+          {/* Live Prediction widget */}
+          <div className="mt-8 mb-16 max-w-2xl mx-auto">
+            <LivePrediction modelId="xgboost" />
           </div>
           
           <div className="animate-bounce text-slate-400 absolute bottom-4 left-1/2 -translate-x-1/2 cursor-pointer" onClick={scrollToSpinWheel}>

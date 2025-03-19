@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import ModelChart from '../components/ModelChart';
 import MetricsCard from '../components/MetricsCard';
 import FeatureComparison from '../components/FeatureComparison';
+import LivePrediction from '../components/LivePrediction';
 import { modelData } from '../data/models';
 import { toast } from 'sonner';
 
@@ -87,6 +88,11 @@ const ModelDetail: React.FC = () => {
           <p className="text-slate-300 leading-relaxed">
             {model.description}
           </p>
+        </div>
+        
+        {/* Live prediction for this model */}
+        <div className="mb-8">
+          <LivePrediction modelId={model.id} />
         </div>
         
         {/* Charts and metrics */}
