@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         <Link to="/" className="flex items-center gap-2">
           <BarChart3 className="h-6 w-6 text-market-teal" />
           <span className="text-xl font-bold bg-gradient-to-r from-market-teal to-blue-300 bg-clip-text text-transparent">
-            StockPredict
+            Market Prediction
           </span>
         </Link>
         
