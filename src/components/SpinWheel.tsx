@@ -71,6 +71,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
           {models.map((model, index) => {
             const startAngle = index * segmentAngle;
             const endAngle = (index + 1) * segmentAngle;
+            const middleAngle = startAngle + segmentAngle / 2;
             
             return (
               <div
@@ -83,15 +84,17 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 onClick={() => handleModelSelect(model.id)}
               >
                 <div 
-                  className="absolute w-full font-bold text-lg text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)]"
+                  className="absolute whitespace-nowrap font-bold text-lg text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
                   style={{
-                    transform: `rotate(${startAngle + segmentAngle/2 - 90}deg) translateX(40%)`,
-                    transformOrigin: 'left center',
-                    width: '50%',
-                    textAlign: 'center'
+                    transform: `rotate(${middleAngle}deg) translateY(-35vh)`,
+                    transformOrigin: 'center center',
+                    width: '100%',
+                    textAlign: 'center',
+                    top: '50%',
+                    left: '0',
                   }}
                 >
-                  {model.shortName}
+                  {model.name}
                 </div>
               </div>
             );
