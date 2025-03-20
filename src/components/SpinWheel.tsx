@@ -85,20 +85,31 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 }}
                 onClick={() => handleModelSelect(model.id)}
               >
+                {/* Improved model name label */}
                 <div 
-                  className="absolute whitespace-nowrap font-bold text-white z-30 select-none"
+                  className="absolute w-full flex items-center justify-center z-50 select-none"
                   style={{
-                    transform: `rotate(${middleAngle}deg)`,
+                    height: '100%',
                     transformOrigin: 'center',
-                    width: '100%',
-                    textAlign: 'center',
-                    top: '30%',
-                    left: '0',
-                    textShadow: '0px 2px 4px rgba(0,0,0,0.8), 0px 0px 8px rgba(0,0,0,0.5)',
-                    fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
+                    transform: `rotate(${middleAngle}deg)`,
                   }}
                 >
-                  {model.name}
+                  <div
+                    className="font-bold text-white whitespace-nowrap"
+                    style={{
+                      transform: `translate(0, -120px) rotate(${-middleAngle}deg)`,
+                      textShadow: '0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.3)',
+                      fontSize: 'clamp(0.9rem, 3vw, 1.4rem)',
+                      maxWidth: '150px',
+                      overflow: 'visible',
+                      letterSpacing: '-0.02em',
+                      padding: '4px 8px',
+                      backgroundColor: 'rgba(0,0,0,0.4)',
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {model.shortName || model.name}
+                  </div>
                 </div>
               </div>
             );
