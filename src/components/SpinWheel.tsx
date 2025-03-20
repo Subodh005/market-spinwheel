@@ -9,13 +9,15 @@ interface SpinWheelProps {
 }
 
 const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
+  // Use only the first 5 models
+  const displayModels = models.slice(0, 5);
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [selectedModel, setSelectedModel] = useState<ModelData | null>(null);
   const wheelRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   
-  const totalModels = models.length;
+  const totalModels = displayModels.length;
   const segmentAngle = 360 / totalModels;
   
   const spinWheel = () => {
@@ -36,7 +38,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
     
     // Wait for the spin to finish then set the selected model
     setTimeout(() => {
-      setSelectedModel(models[selectedIndex]);
+      setSelectedModel(displayModels[selectedIndex]);
       setSpinning(false);
     }, 3000);
   };
@@ -68,7 +70,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
             transition: spinning ? 'transform 3s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'
           }}
         >
-          {models.map((model, index) => {
+          {displayModels.map((model, index) => {
             const startAngle = index * segmentAngle;
             const endAngle = (index + 1) * segmentAngle;
             const middleAngle = startAngle + segmentAngle / 2;
@@ -84,16 +86,16 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 onClick={() => handleModelSelect(model.id)}
               >
                 <div 
-                  className="absolute whitespace-nowrap font-bold text-white z-20 select-none"
+                  className="absolute whitespace-nowrap font-bold text-white z-30 select-none"
                   style={{
                     transform: `rotate(${middleAngle}deg)`,
                     transformOrigin: 'center',
                     width: '100%',
                     textAlign: 'center',
-                    top: '25%',
+                    top: '30%',
                     left: '0',
                     textShadow: '0px 2px 4px rgba(0,0,0,0.8), 0px 0px 8px rgba(0,0,0,0.5)',
-                    fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
+                    fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
                   }}
                 >
                   {model.name}
