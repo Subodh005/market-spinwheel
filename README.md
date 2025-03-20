@@ -1,8 +1,28 @@
+
 # Welcome to your Lovable project
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/2d4d50d3-1690-41cc-82e4-2535c7df87ec
+
+## How can I run this project?
+
+Since the standard npm scripts might not be available, you can start the development server using:
+
+```sh
+# For Windows
+node start-dev.js
+
+# For Mac/Linux - you might need to make the file executable first
+# chmod +x start-dev.js
+# ./start-dev.js
+```
+
+Or run Vite directly:
+
+```sh
+npx vite
+```
 
 ## How can I edit this code?
 
@@ -33,7 +53,8 @@ cd <YOUR_PROJECT_NAME>
 npm i
 
 # Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+node start-dev.js
+# OR use npx vite
 ```
 
 **Edit a file directly in GitHub**
@@ -52,7 +73,7 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with:
 
 - Vite
 - TypeScript
