@@ -43,13 +43,6 @@ const Index: React.FC = () => {
             >
               Explore Models
             </button>
-            
-            <a 
-              href="/about" 
-              className="px-8 py-3 rounded-full font-medium border border-slate-600 text-slate-300 hover:text-white hover:border-slate-500 transition-colors"
-            >
-              Learn More
-            </a>
           </div>
           
           {/* Live Prediction widget */}

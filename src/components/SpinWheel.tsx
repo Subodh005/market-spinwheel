@@ -84,14 +84,16 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 onClick={() => handleModelSelect(model.id)}
               >
                 <div 
-                  className="absolute whitespace-nowrap font-bold text-lg text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] z-10"
+                  className="absolute whitespace-nowrap font-bold text-white z-20 select-none"
                   style={{
-                    transform: `rotate(${middleAngle}deg) translateY(-40%)`,
-                    transformOrigin: 'center center',
+                    transform: `rotate(${middleAngle}deg)`,
+                    transformOrigin: 'center',
                     width: '100%',
                     textAlign: 'center',
-                    top: '50%',
+                    top: '25%',
                     left: '0',
+                    textShadow: '0px 2px 4px rgba(0,0,0,0.8), 0px 0px 8px rgba(0,0,0,0.5)',
+                    fontSize: 'clamp(0.875rem, 2vw, 1.25rem)',
                   }}
                 >
                   {model.name}
@@ -109,7 +111,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
         </div>
         
         {/* Pointer */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 w-8 h-8 text-market-teal">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 w-8 h-8 text-market-teal z-30">
           <ChevronRight className="w-8 h-8 -rotate-90" />
         </div>
       </div>
