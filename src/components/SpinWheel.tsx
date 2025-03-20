@@ -84,9 +84,9 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 onClick={() => handleModelSelect(model.id)}
               >
                 <div 
-                  className="absolute whitespace-nowrap font-bold text-lg text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
+                  className="absolute whitespace-nowrap font-bold text-lg text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] z-10"
                   style={{
-                    transform: `rotate(${middleAngle}deg) translateY(-35vh)`,
+                    transform: `rotate(${middleAngle}deg) translateY(-40%)`,
                     transformOrigin: 'center center',
                     width: '100%',
                     textAlign: 'center',

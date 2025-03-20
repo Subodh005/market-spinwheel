@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { BarChart3, Home, Info, Settings } from 'lucide-react';
+import { BarChart3, Home, Info } from 'lucide-react';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -31,11 +31,7 @@ const Header: React.FC = () => {
           </NavLink>
         </nav>
         
-        <div className="flex items-center">
-          <button className="p-2 rounded-full hover:bg-slate-700/50 transition-colors">
-            <Settings className="h-5 w-5 text-slate-300" />
-          </button>
-        </div>
+        {/* Removed settings button */}
       </div>
     </header>
   );

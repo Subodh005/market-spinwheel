@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, LineChart, Share2, Download } from 'lucide-react';
+import { ArrowLeft, LineChart } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ModelChart from '../components/ModelChart';
@@ -65,21 +65,7 @@ const ModelDetail: React.FC = () => {
               <h1 className="text-3xl font-bold text-white mt-2">{model.name}</h1>
             </div>
             
-            <div className="flex items-center gap-3">
-              <button 
-                className="p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
-                onClick={() => toast.success("Link copied to clipboard!")}
-              >
-                <Share2 className="w-5 h-5" />
-              </button>
-              
-              <button 
-                className="p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
-                onClick={() => toast.success("Report downloaded!")}
-              >
-                <Download className="w-5 h-5" />
-              </button>
-            </div>
+            {/* Removed share, download, and settings buttons */}
           </div>
         </div>
         
