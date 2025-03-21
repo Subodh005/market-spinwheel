@@ -5,24 +5,46 @@
 
 **URL**: https://lovable.dev/projects/2d4d50d3-1690-41cc-82e4-2535c7df87ec
 
-## How can I run this project?
+## How to run this project in VS Code
 
-Since the standard npm scripts might not be available, you can start the development server using:
+Follow these step-by-step instructions to run the project locally:
 
-```sh
-# For Windows
-node start-dev.js
+1. **Open a terminal in VS Code** (Terminal > New Terminal)
 
-# For Mac/Linux - you might need to make the file executable first
-# chmod +x start-dev.js
-# ./start-dev.js
-```
+2. **Install dependencies** (if you haven't already)
+   ```bash
+   npm install
+   ```
 
-Or run Vite directly:
+3. **Start the development server** using one of these methods:
 
-```sh
-npx vite
-```
+   **Option 1**: Using Vite directly (recommended)
+   ```bash
+   npx vite
+   ```
+
+   **Option 2**: Using the start-dev.js script
+   ```bash
+   # For Windows
+   node start-dev.js
+
+   # For Mac/Linux - make the file executable first
+   chmod +x start-dev.js
+   ./start-dev.js
+   ```
+
+   **Option 3**: If you encounter issues with line endings in Windows
+   ```bash
+   # This ensures proper line endings for the script
+   npx cross-env-shell "vite"
+   ```
+
+4. **View your application** by opening the URL shown in the terminal (typically http://localhost:8080)
+
+5. **Troubleshooting**:
+   - If you see a "MODULE_NOT_FOUND" error, try running `npm install` again
+   - If the script permissions are an issue on Mac/Linux, run `chmod +x start-dev.js`
+   - If you encounter ENOENT errors, try running Vite directly with `npx vite`
 
 ## How can I edit this code?
 
