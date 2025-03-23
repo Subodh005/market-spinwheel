@@ -2,8 +2,8 @@
 #!/usr/bin/env node
 
 const { execSync } = require('child_process');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
 try {
   // Check if node_modules directory exists
@@ -16,16 +16,19 @@ try {
   console.log('\n🔍 Starting Vite development server...');
   console.log('\n🚀 Server will be available at http://localhost:8080\n');
 
-  // Use execSync to directly run the command
-  // This simplifies the process and eliminates some potential error sources
-  execSync('npx vite --port 8080 --force', { 
+  // Use directly npm run rather than npx to avoid npm-prefix.js issues
+  execSync('npm run dev', { 
     stdio: 'inherit',
-    shell: true 
+    shell: true,
+    env: {
+      ...process.env,
+      PORT: 8080
+    }
   });
 } catch (error) {
   console.error('\n❌ Failed to start the development server:', error.message);
   console.log('\n💡 Try running these commands directly in your terminal:');
   console.log('   npm install');
-  console.log('   npx vite --port 8080 --force');
+  console.log('   npm run dev');
   process.exit(1);
 }
