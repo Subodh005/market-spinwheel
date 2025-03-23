@@ -16,8 +16,11 @@ try {
   console.log('\n🔍 Starting Vite development server...');
   console.log('\n🚀 Server will be available at http://localhost:8080\n');
 
-  // Use directly npm run rather than npx to avoid npm-prefix.js issues
-  execSync('npm run dev', { 
+  // Directly use node to run the vite CLI file
+  // This bypasses npm/npx completely to avoid npm-prefix.js issues
+  const vitePath = path.join(__dirname, 'node_modules', 'vite', 'bin', 'vite.js');
+  
+  execSync(`node "${vitePath}" --port 8080 --host`, { 
     stdio: 'inherit',
     shell: true,
     env: {
@@ -29,6 +32,11 @@ try {
   console.error('\n❌ Failed to start the development server:', error.message);
   console.log('\n💡 Try running these commands directly in your terminal:');
   console.log('   npm install');
-  console.log('   npm run dev');
+  console.log('   npx vite --port 8080');
+  
+  // Additional troubleshooting advice
+  console.log('\n📋 If you keep seeing npm-prefix.js errors, try these alternatives:');
+  console.log('   1. Edit package.json and run: npm run dev');
+  console.log('   2. Run directly: node ./node_modules/vite/bin/vite.js');
   process.exit(1);
 }

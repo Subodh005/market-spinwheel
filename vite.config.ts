@@ -8,7 +8,7 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: parseInt(process.env.PORT || '8080'),
+    port: 8080,
     strictPort: true, // This forces Vite to use the specified port or fail
   },
   plugins: [
