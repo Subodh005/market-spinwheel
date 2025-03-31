@@ -7,18 +7,18 @@ interface LivePredictionProps {
   modelId?: string; // Optional model ID to use for prediction
 }
 
-const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'xgboost' }) => {
+const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-forest' }) => {
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const [predictedPrice, setPredictedPrice] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   
   // Function to get a more accurate Apple stock price
-  // Using a more realistic baseline around the recent trading range (~$170-180)
+  // Using the current market range (~$190-195 as of mid-2024)
   const fetchCurrentPrice = () => {
-    // Base price around $175 with smaller variations to be more realistic
-    const basePrice = 175.25;
-    const variation = (Math.random() * 5) - 2.5; // Random variation between -2.5 and +2.5
+    // Base price around $193 with smaller variations to match current market
+    const basePrice = 193.25;
+    const variation = (Math.random() * 2) - 1; // Random variation between -1 and +1
     return parseFloat((basePrice + variation).toFixed(2));
   };
   
