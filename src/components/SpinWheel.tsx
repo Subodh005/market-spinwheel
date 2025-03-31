@@ -9,8 +9,8 @@ interface SpinWheelProps {
 }
 
 const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
-  // Use only the first 5 models
-  const displayModels = models.slice(0, 5);
+  // Use all available models instead of limiting to 5
+  const displayModels = models;
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [selectedModel, setSelectedModel] = useState<ModelData | null>(null);

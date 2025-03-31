@@ -164,5 +164,34 @@ export const modelData: ModelData[] = [
       "Sensitive to irrelevant features",
       "Requires feature scaling"
     ]
+  },
+  {
+    id: "xgboost",
+    name: "XGBoost",
+    shortName: "XGB",
+    color: "#0EA5E9", // Blue
+    description: "An optimized gradient boosting framework designed for speed and performance. Our XGBoost model leverages historical data with advanced feature engineering to predict stock prices.",
+    metrics: {
+      accuracy: 0.91,
+      mse: 0.022,
+      mae: 0.115,
+      rmse: 0.148,
+      r2: 0.91
+    },
+    features: [
+      "Gradient boosting algorithm",
+      "Regularization to prevent overfitting",
+      "Handles missing values automatically"
+    ],
+    advantages: [
+      "Generally outperforms other models in accuracy",
+      "Fast execution speed",
+      "Built-in regularization and cross-validation"
+    ],
+    limitations: [
+      "Requires careful tuning of hyperparameters",
+      "Can be prone to overfitting with noisy data",
+      "Less interpretable than simpler models"
+    ]
   }
 ];
