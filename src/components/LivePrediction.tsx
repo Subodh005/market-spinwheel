@@ -14,10 +14,10 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   
   // Function to get a more accurate Apple stock price
-  // Using the current market range (~$190-195 as of mid-2024)
+  // Using the current market price (~$217 as of the latest data)
   const fetchCurrentPrice = () => {
-    // Base price around $193 with smaller variations to match current market
-    const basePrice = 193.25;
+    // Base price around $217 with smaller variations to match current market
+    const basePrice = 217.90;
     const variation = (Math.random() * 2) - 1; // Random variation between -1 and +1
     return parseFloat((basePrice + variation).toFixed(2));
   };
