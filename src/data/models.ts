@@ -251,5 +251,34 @@ export const modelData: ModelData[] = [
       "Requires substantial data",
       "Complex to optimize hyperparameters"
     ]
+  },
+  {
+    id: "ann",
+    name: "Artificial Neural Network",
+    shortName: "ANN",
+    color: "#06B6D4", // Cyan
+    description: "A computing system inspired by biological neural networks. Our ANN model uses multiple layers of interconnected nodes to analyze Apple stock price data and predict future movements with high precision.",
+    metrics: {
+      accuracy: 0.91,
+      mse: 0.022,
+      mae: 0.115,
+      rmse: 0.148,
+      r2: 0.91
+    },
+    features: [
+      "Multiple fully connected layers",
+      "Non-linear activation functions",
+      "Backpropagation learning"
+    ],
+    advantages: [
+      "Highly adaptable to complex patterns",
+      "Can model almost any function with enough neurons",
+      "Generalizes well with proper training"
+    ],
+    limitations: [
+      "Requires significant data for training",
+      "Computationally expensive",
+      "Black-box nature limits interpretability"
+    ]
   }
 ];
