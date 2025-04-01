@@ -87,9 +87,6 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-bold text-white">
           Live AAPL Prediction
-          <span className="ml-2 text-sm font-normal text-slate-400">
-            using {modelId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-          </span>
         </h3>
         <button 
           onClick={refreshData} 
