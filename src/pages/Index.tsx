@@ -8,6 +8,18 @@ import TradingBackground from '../components/TradingBackground';
 import LivePrediction from '../components/LivePrediction';
 import { modelData } from '../data/models';
 
+// Add the glow animation to global styles via a style element
+const glowAnimationStyle = `
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3); }
+    50% { text-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3); }
+    100% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3); }
+  }
+  .glow-text {
+    animation: glow 2s ease-in-out infinite;
+  }
+`;
+
 const Index: React.FC = () => {
   const spinWheelRef = useRef<HTMLDivElement>(null);
   
@@ -17,16 +29,8 @@ const Index: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-market-dark-blue to-market-dark overflow-hidden">
-      <style jsx>{`
-        @keyframes glow {
-          0% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3); }
-          50% { text-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3); }
-          100% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3); }
-        }
-        .glow-text {
-          animation: glow 2s ease-in-out infinite;
-        }
-      `}</style>
+      {/* Add the animation styles using a regular style tag without the jsx attribute */}
+      <style dangerouslySetInnerHTML={{ __html: glowAnimationStyle }} />
 
       <TradingBackground />
       <Header />
