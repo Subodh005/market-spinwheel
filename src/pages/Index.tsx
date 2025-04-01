@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { ArrowDown, TrendingUp } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -20,30 +20,32 @@ const glowAnimationStyle = `
   }
 `;
 
+const scrollToSpinWheel = () => {
+  const spinWheelElement = document.getElementById('spin-wheel-section');
+  if (spinWheelElement) {
+    spinWheelElement.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 const Index: React.FC = () => {
   const spinWheelRef = useRef<HTMLDivElement>(null);
   
-  const scrollToSpinWheel = () => {
-    spinWheelRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-  
   return (
     <div className="min-h-screen bg-gradient-to-b from-market-dark-blue to-market-dark overflow-hidden">
-      {/* Add the animation styles using a regular style tag without the jsx attribute */}
+      {/* Add the animation styles using a regular style tag without jsx attribute */}
       <style dangerouslySetInnerHTML={{ __html: glowAnimationStyle }} />
-
+      
       <TradingBackground />
       <Header />
       
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 min-h-screen flex flex-col justify-center items-center">
+      <section className="relative pt-32 pb-20 px-6 min-h-screen">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-market-teal to-blue-400 bg-clip-text text-transparent">
               Stock Market
             </span>
             <br />
-            Price Prediction
+            PRICE PREDICTION
           </h1>
           
           <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
@@ -70,14 +72,13 @@ const Index: React.FC = () => {
           </div>
         </div>
         
-        {/* Floating elements */}
+        {/* Floating Elements */}
         <div className="absolute top-[20%] right-[10%] w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-lg opacity-30 animate-float" />
         <div className="absolute top-[60%] left-[15%] w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20 animate-float" style={{ animationDelay: '1s' }} />
         <div className="absolute top-[30%] left-[8%] w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg opacity-25 animate-float" style={{ animationDelay: '2s' }} />
       </section>
       
-      {/* Spin Wheel Section */}
-      <section ref={spinWheelRef} className="py-20 px-6 min-h-screen flex flex-col justify-center">
+      <section id="spin-wheel-section" ref={spinWheelRef} className="py-20 px-6 min-h-screen flex flex-col justify-center">
         <div className="max-w-4xl mx-auto w-full">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-2 mb-4">

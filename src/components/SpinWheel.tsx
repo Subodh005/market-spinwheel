@@ -9,7 +9,7 @@ interface SpinWheelProps {
 }
 
 const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
-  // Use all available models instead of limiting to 5
+  // Use All Available Models Instead of Limiting to 5
   const displayModels = models;
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
@@ -22,7 +22,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
   
   // Find the model with the best accuracy
   const bestModel = displayModels.reduce((best, current) => 
-    current.metrics.accuracy > best.metrics.accuracy ? current : best, 
+    current.metrics.accuracy > best.metrics.accuracy ? current : best,
     displayModels[0]
   );
   
