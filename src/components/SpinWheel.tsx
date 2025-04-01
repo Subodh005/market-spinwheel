@@ -80,7 +80,6 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
             const startAngle = index * segmentAngle;
             const endAngle = (index + 1) * segmentAngle;
             const middleAngle = startAngle + segmentAngle / 2;
-            const isBestModel = model.id === bestModel.id;
             
             return (
               <div
@@ -89,11 +88,10 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 style={{
                   clipPath: `polygon(50% 50%, ${50 + 50 * Math.cos((startAngle - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((startAngle - 90) * Math.PI / 180)}%, ${50 + 50 * Math.cos((endAngle - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((endAngle - 90) * Math.PI / 180)}%)`,
                   background: `linear-gradient(${startAngle}deg, ${model.color}dd, ${model.color}99)`,
-                  boxShadow: isBestModel ? '0 0 20px 5px rgba(255,255,255,0.3) inset' : 'none',
                 }}
                 onClick={() => handleModelSelect(model.id)}
               >
-                {/* Improved model name label */}
+                {/* Model name label */}
                 <div 
                   className="absolute w-full flex items-center justify-center z-50 select-none"
                   style={{
@@ -103,22 +101,20 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                   }}
                 >
                   <div
-                    className={`font-bold text-white whitespace-nowrap ${isBestModel ? 'glow-text' : ''}`}
+                    className="font-bold text-white whitespace-nowrap"
                     style={{
                       transform: `translate(0, -120px) rotate(${-middleAngle}deg)`,
-                      textShadow: isBestModel ? '0 0 10px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.6)' : '0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.3)',
+                      textShadow: '0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.3)',
                       fontSize: 'clamp(0.9rem, 3vw, 1.4rem)',
                       maxWidth: '150px',
                       overflow: 'visible',
                       letterSpacing: '-0.02em',
                       padding: '4px 8px',
-                      backgroundColor: isBestModel ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.4)',
+                      backgroundColor: 'rgba(0,0,0,0.4)',
                       borderRadius: '4px',
                     }}
                   >
-                    {isBestModel && <Award className="inline-block w-4 h-4 mr-1 text-yellow-300 animate-pulse" />}
                     {model.shortName || model.name}
-                    {isBestModel && <span className="ml-1 text-xs text-yellow-300">(Best)</span>}
                   </div>
                 </div>
               </div>
