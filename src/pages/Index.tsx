@@ -17,6 +17,17 @@ const Index: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-market-dark-blue to-market-dark overflow-hidden">
+      <style jsx>{`
+        @keyframes glow {
+          0% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3); }
+          50% { text-shadow: 0 0 10px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3); }
+          100% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3); }
+        }
+        .glow-text {
+          animation: glow 2s ease-in-out infinite;
+        }
+      `}</style>
+
       <TradingBackground />
       <Header />
       

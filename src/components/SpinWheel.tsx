@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ModelData } from '../data/models';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Award } from 'lucide-react';
 
 interface SpinWheelProps {
   models: ModelData[];
@@ -19,6 +19,12 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
   
   const totalModels = displayModels.length;
   const segmentAngle = 360 / totalModels;
+  
+  // Find the model with the best accuracy
+  const bestModel = displayModels.reduce((best, current) => 
+    current.metrics.accuracy > best.metrics.accuracy ? current : best, 
+    displayModels[0]
+  );
   
   const spinWheel = () => {
     if (spinning) return;
@@ -74,6 +80,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
             const startAngle = index * segmentAngle;
             const endAngle = (index + 1) * segmentAngle;
             const middleAngle = startAngle + segmentAngle / 2;
+            const isBestModel = model.id === bestModel.id;
             
             return (
               <div
@@ -82,6 +89,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 style={{
                   clipPath: `polygon(50% 50%, ${50 + 50 * Math.cos((startAngle - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((startAngle - 90) * Math.PI / 180)}%, ${50 + 50 * Math.cos((endAngle - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((endAngle - 90) * Math.PI / 180)}%)`,
                   background: `linear-gradient(${startAngle}deg, ${model.color}dd, ${model.color}99)`,
+                  boxShadow: isBestModel ? '0 0 20px 5px rgba(255,255,255,0.3) inset' : 'none',
                 }}
                 onClick={() => handleModelSelect(model.id)}
               >
@@ -95,20 +103,22 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                   }}
                 >
                   <div
-                    className="font-bold text-white whitespace-nowrap"
+                    className={`font-bold text-white whitespace-nowrap ${isBestModel ? 'glow-text' : ''}`}
                     style={{
                       transform: `translate(0, -120px) rotate(${-middleAngle}deg)`,
-                      textShadow: '0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.3)',
+                      textShadow: isBestModel ? '0 0 10px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.6)' : '0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.3)',
                       fontSize: 'clamp(0.9rem, 3vw, 1.4rem)',
                       maxWidth: '150px',
                       overflow: 'visible',
                       letterSpacing: '-0.02em',
                       padding: '4px 8px',
-                      backgroundColor: 'rgba(0,0,0,0.4)',
+                      backgroundColor: isBestModel ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.4)',
                       borderRadius: '4px',
                     }}
                   >
+                    {isBestModel && <Award className="inline-block w-4 h-4 mr-1 text-yellow-300 animate-pulse" />}
                     {model.shortName || model.name}
+                    {isBestModel && <span className="ml-1 text-xs text-yellow-300">(Best)</span>}
                   </div>
                 </div>
               </div>
@@ -149,6 +159,14 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
           <p className="text-sm text-slate-400 mt-1">Redirecting to model details...</p>
         </div>
       )}
+      
+      {/* Add information about the best model */}
+      <div className="text-center mt-2 mb-6">
+        <p className="text-sm text-slate-300">
+          <Award className="inline-block w-4 h-4 mr-1 text-yellow-300" />
+          <span className="text-yellow-300 font-medium">{bestModel.name}</span> has the highest accuracy at {(bestModel.metrics.accuracy * 100).toFixed(1)}%
+        </p>
+      </div>
     </div>
   );
 };
