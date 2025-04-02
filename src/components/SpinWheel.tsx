@@ -91,7 +91,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                 }}
                 onClick={() => handleModelSelect(model.id)}
               >
-                {/* Model name label */}
+                {/* Model name label - Adjusted position to move upward */}
                 <div 
                   className="absolute w-full flex items-center justify-center z-50 select-none"
                   style={{
@@ -103,7 +103,7 @@ const SpinWheel: React.FC<SpinWheelProps> = ({ models }) => {
                   <div
                     className="font-bold text-white whitespace-nowrap"
                     style={{
-                      transform: `translate(0, -120px) rotate(${-middleAngle}deg)`,
+                      transform: `translate(0, -140px) rotate(${-middleAngle}deg)`, // Changed from -120px to -140px to move labels higher
                       textShadow: '0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5), 0 0 30px rgba(0,0,0,0.3)',
                       fontSize: 'clamp(0.9rem, 3vw, 1.4rem)',
                       maxWidth: '150px',
