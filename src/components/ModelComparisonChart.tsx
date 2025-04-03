@@ -53,21 +53,15 @@ const generatePredictionData = (models: ModelData[]) => {
   return data;
 };
 
-// Generate metrics comparison data
+// Generate metrics comparison data - only for accuracy
 const generateMetricsData = (models: ModelData[]) => {
-  const metricKeys = ['accuracy', 'speed', 'consistency'];
-  
-  return metricKeys.map(metric => {
-    const data: { [key: string]: any } = {
-      name: metric.charAt(0).toUpperCase() + metric.slice(1),
-    };
-    
-    models.forEach(model => {
-      data[model.id] = model.metrics[metric as keyof typeof model.metrics] * 100;
-    });
-    
-    return data;
-  });
+  return [{
+    name: "Accuracy",
+    ...models.reduce((acc, model) => {
+      acc[model.id] = model.metrics.accuracy * 100;
+      return acc;
+    }, {} as Record<string, number>)
+  }];
 };
 
 const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) => {
@@ -131,7 +125,7 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
           </TabsTrigger>
           <TabsTrigger value="bar" className="flex items-center gap-2">
             <ChartBar className="w-4 h-4" />
-            <span>Metrics Comparison</span>
+            <span>Accuracy Comparison</span>
           </TabsTrigger>
         </TabsList>
         
