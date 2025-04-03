@@ -1,6 +1,7 @@
 
 import React, { useRef } from 'react';
-import { ArrowDown, TrendingUp } from 'lucide-react';
+import { ArrowDown, TrendingUp, BarChart2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import SpinWheel from '../components/SpinWheel';
@@ -60,6 +61,14 @@ const Index: React.FC = () => {
             >
               Explore Models
             </button>
+
+            <Link 
+              to="/compare"
+              className="px-8 py-3 rounded-full font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] hover:scale-105 transition-all flex items-center gap-2"
+            >
+              <BarChart2 className="w-5 h-5" />
+              Compare Models
+            </Link>
           </div>
           
           {/* Live Prediction widget */}
@@ -95,6 +104,16 @@ const Index: React.FC = () => {
               Spin the wheel to explore different machine learning models and their 
               prediction accuracy for stock market prices.
             </p>
+            
+            <div className="mt-4">
+              <Link 
+                to="/compare"
+                className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors"
+              >
+                <BarChart2 className="w-4 h-4" />
+                <span>Or compare multiple models side-by-side</span>
+              </Link>
+            </div>
           </div>
           
           <SpinWheel models={modelData} />
