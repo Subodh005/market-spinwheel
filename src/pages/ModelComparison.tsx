@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ComparisonTable from '../components/ComparisonTable';
 import ModelSelector from '../components/ModelSelector';
+import ModelComparisonChart from '../components/ModelComparisonChart';
 import { modelData, ModelData } from '../data/models';
 import { ArrowLeft, BarChart, Columns2 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -141,10 +142,15 @@ const ModelComparison: React.FC = () => {
                   </p>
                 </div>
               ) : (
-                <ComparisonTable 
-                  models={selectedModels}
-                  viewMode={viewMode}
-                />
+                <>
+                  {/* Add the chart component above the table */}
+                  <ModelComparisonChart models={selectedModels} />
+                  
+                  <ComparisonTable 
+                    models={selectedModels}
+                    viewMode={viewMode}
+                  />
+                </>
               )}
             </div>
           </div>
