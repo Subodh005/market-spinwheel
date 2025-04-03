@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   CartesianGrid, 
   Legend, 
@@ -71,8 +71,16 @@ const generateMetricsData = (models: ModelData[]) => {
 };
 
 const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) => {
-  const [chartData, setChartData] = useState(() => generatePredictionData(models));
-  const [metricData, setMetricData] = useState(() => generateMetricsData(models));
+  const [chartData, setChartData] = useState<any[]>([]);
+  const [metricData, setMetricData] = useState<any[]>([]);
+  
+  // Update chart data when models change
+  useEffect(() => {
+    if (models.length > 0) {
+      setChartData(generatePredictionData(models));
+      setMetricData(generateMetricsData(models));
+    }
+  }, [models]);
   
   const regenerateData = () => {
     setChartData(generatePredictionData(models));
@@ -96,6 +104,10 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
     
     return config;
   };
+  
+  if (models.length === 0) {
+    return null;
+  }
   
   return (
     <div className="w-full mt-6 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-4">
@@ -157,12 +169,26 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                     dataKey={model.id} 
                     stroke={model.color}
                     strokeWidth={2}
-                    dot={false}
+                    dot={{ fill: model.color, strokeWidth: 1 }}
                     activeDot={{ r: 6 }}
                   />
                 ))}
               </LineChart>
             </ChartContainer>
+          </div>
+          
+          {/* Add a legend for better visibility */}
+          <div className="flex flex-wrap justify-center gap-4 mt-4 pt-2 border-t border-slate-700/50">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-1 bg-slate-400 rounded-full"></div>
+              <span className="text-xs text-slate-400">actual</span>
+            </div>
+            {models.map(model => (
+              <div key={model.id} className="flex items-center gap-2">
+                <div className="w-3 h-1 rounded-full" style={{ backgroundColor: model.color }}></div>
+                <span className="text-xs text-slate-400">{model.id}</span>
+              </div>
+            ))}
           </div>
         </TabsContent>
         
