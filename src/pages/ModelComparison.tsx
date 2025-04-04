@@ -27,9 +27,9 @@ const ModelComparison: React.FC = () => {
       return;
     }
     
-    // Limit to comparing 4 models at most
-    if (selectedModels.length >= 4) {
-      toast.error("You can compare up to 4 models at once");
+    // Limit to comparing 2 models at most (changed from 4)
+    if (selectedModels.length >= 2) {
+      toast.error("You can compare up to 2 models at once");
       return;
     }
     
@@ -50,9 +50,9 @@ const ModelComparison: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-market-dark-blue to-market-dark overflow-y-auto">
       <Header />
       
-      <ScrollArea className="h-[calc(100vh-64px)] pb-16">
-        <div className="container max-w-7xl mx-auto px-4 py-12 pt-24">
-          <div className="flex items-center gap-4 mb-8">
+      <ScrollArea className="h-[calc(100vh-64px)]">
+        <div className="container max-w-7xl mx-auto px-4 py-8 pt-20">
+          <div className="flex items-center gap-4 mb-6">
             <button 
               onClick={() => navigate('/')}
               className="flex items-center gap-2 text-slate-300 hover:text-white"
@@ -70,7 +70,7 @@ const ModelComparison: React.FC = () => {
             </h1>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
             <div className="md:col-span-1">
               <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-4">
                 <h2 className="text-xl font-semibold text-white mb-4">Select Models</h2>
@@ -136,7 +136,7 @@ const ModelComparison: React.FC = () => {
                 </div>
                 
                 {selectedModels.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-16 text-center">
+                  <div className="flex flex-col items-center justify-center py-12 text-center">
                     <div className="text-slate-400 mb-4 text-6xl">⚖️</div>
                     <h3 className="text-xl font-medium text-white mb-2">No Models Selected</h3>
                     <p className="text-slate-400 max-w-md">
@@ -145,9 +145,7 @@ const ModelComparison: React.FC = () => {
                   </div>
                 ) : (
                   <>
-                    {/* Add the chart component above the table */}
                     <ModelComparisonChart models={selectedModels} />
-                    
                     <ComparisonTable 
                       models={selectedModels}
                       viewMode={viewMode}
