@@ -134,11 +134,21 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
             <ChartContainer config={getModelConfig()}>
               <LineChart
                 data={chartData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 20, right: 40, left: 20, bottom: 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis domain={['dataMin - 5', 'dataMax + 5']} />
+                <XAxis 
+                  dataKey="month"
+                  padding={{ left: 10, right: 10 }} 
+                  tick={{ fontSize: 12 }}
+                  tickMargin={10}
+                />
+                <YAxis 
+                  domain={['dataMin - 5', 'dataMax + 5']} 
+                  padding={{ top: 20, bottom: 20 }}
+                  tick={{ fontSize: 12 }}
+                  tickMargin={10}
+                />
                 
                 <ChartTooltip
                   content={
@@ -146,7 +156,13 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                   }
                 />
                 
-                <Legend />
+                <Legend 
+                  verticalAlign="bottom" 
+                  height={36}
+                  wrapperStyle={{ paddingTop: '20px' }}
+                  iconSize={10}
+                  iconType="circle"
+                />
                 
                 <Line 
                   type="monotone" 
@@ -163,7 +179,7 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                     dataKey={model.id} 
                     stroke={model.color}
                     strokeWidth={2}
-                    dot={{ fill: model.color, strokeWidth: 1 }}
+                    dot={{ fill: model.color, strokeWidth: 1, r: 4 }}
                     activeDot={{ r: 6 }}
                   />
                 ))}
@@ -171,16 +187,16 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
             </ChartContainer>
           </div>
           
-          {/* Add a legend for better visibility */}
-          <div className="flex flex-wrap justify-center gap-4 mt-4 pt-2 border-t border-slate-700/50">
+          {/* Enhanced legend for better visibility */}
+          <div className="flex flex-wrap justify-center gap-6 mt-6 pt-4 border-t border-slate-700/50">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-1 bg-slate-400 rounded-full"></div>
-              <span className="text-xs text-slate-400">actual</span>
+              <div className="w-4 h-2 bg-slate-400 rounded-full"></div>
+              <span className="text-sm text-slate-300">Actual</span>
             </div>
             {models.map(model => (
               <div key={model.id} className="flex items-center gap-2">
-                <div className="w-3 h-1 rounded-full" style={{ backgroundColor: model.color }}></div>
-                <span className="text-xs text-slate-400">{model.id}</span>
+                <div className="w-4 h-2 rounded-full" style={{ backgroundColor: model.color }}></div>
+                <span className="text-sm text-slate-300">{model.name}</span>
               </div>
             ))}
           </div>
@@ -191,11 +207,19 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
             <ChartContainer config={getModelConfig()}>
               <BarChart
                 data={metricData}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 20, right: 40, left: 20, bottom: 20 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis domain={[0, 100]} />
+                <XAxis 
+                  dataKey="name" 
+                  tick={{ fontSize: 12 }}
+                  tickMargin={10}
+                />
+                <YAxis 
+                  domain={[0, 100]} 
+                  tick={{ fontSize: 12 }}
+                  tickMargin={10}
+                />
                 
                 <ChartTooltip
                   content={
@@ -203,7 +227,13 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                   }
                 />
                 
-                <Legend />
+                <Legend 
+                  verticalAlign="bottom" 
+                  height={36}
+                  wrapperStyle={{ paddingTop: '20px' }}
+                  iconSize={10}
+                  iconType="circle"
+                />
                 
                 {models.map((model) => (
                   <Bar 
@@ -212,6 +242,8 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                     fill={model.color} 
                     name={model.name}
                     radius={[4, 4, 0, 0]}
+                    barSize={40}
+                    maxBarSize={60}
                   />
                 ))}
               </BarChart>
