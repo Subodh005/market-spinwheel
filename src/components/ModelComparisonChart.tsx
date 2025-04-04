@@ -104,8 +104,8 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
   }
   
   return (
-    <div className="w-full mt-6 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-4">
-      <div className="flex justify-between items-center mb-6">
+    <div className="w-full mt-8 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 p-6">
+      <div className="flex justify-between items-center mb-8">
         <h3 className="text-xl font-medium text-white">Performance Comparison</h3>
         <button 
           onClick={regenerateData}
@@ -118,7 +118,7 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
       </div>
       
       <Tabs defaultValue="line" className="w-full">
-        <TabsList className="grid w-full max-w-md grid-cols-2 mb-6">
+        <TabsList className="grid w-full max-w-md grid-cols-2 mb-8">
           <TabsTrigger value="line" className="flex items-center gap-2">
             <ChartLine className="w-4 h-4" />
             <span>Prediction Accuracy</span>
@@ -130,24 +130,26 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
         </TabsList>
         
         <TabsContent value="line" className="pt-2">
-          <div className="w-full h-80">
+          <div className="w-full h-96">
             <ChartContainer config={getModelConfig()}>
               <LineChart
                 data={chartData}
-                margin={{ top: 20, right: 40, left: 20, bottom: 20 }}
+                margin={{ top: 30, right: 60, left: 30, bottom: 50 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="month"
-                  padding={{ left: 10, right: 10 }} 
+                  padding={{ left: 20, right: 20 }} 
                   tick={{ fontSize: 12 }}
-                  tickMargin={10}
+                  tickMargin={15}
+                  height={50}
                 />
                 <YAxis 
-                  domain={['dataMin - 5', 'dataMax + 5']} 
-                  padding={{ top: 20, bottom: 20 }}
+                  domain={['dataMin - 10', 'dataMax + 10']} 
+                  padding={{ top: 30, bottom: 30 }}
                   tick={{ fontSize: 12 }}
-                  tickMargin={10}
+                  tickMargin={15}
+                  width={45}
                 />
                 
                 <ChartTooltip
@@ -158,9 +160,13 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                 
                 <Legend 
                   verticalAlign="bottom" 
-                  height={36}
-                  wrapperStyle={{ paddingTop: '20px' }}
-                  iconSize={10}
+                  height={50}
+                  wrapperStyle={{ 
+                    paddingTop: '30px',
+                    bottom: '10px',
+                    fontSize: '14px'
+                  }}
+                  iconSize={12}
                   iconType="circle"
                 />
                 
@@ -187,38 +193,40 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
             </ChartContainer>
           </div>
           
-          {/* Enhanced legend for better visibility */}
-          <div className="flex flex-wrap justify-center gap-6 mt-6 pt-4 border-t border-slate-700/50">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-2 bg-slate-400 rounded-full"></div>
-              <span className="text-sm text-slate-300">Actual</span>
+          {/* Enhanced legend for better visibility with increased spacing */}
+          <div className="flex flex-wrap justify-center gap-10 mt-8 pt-6 border-t border-slate-700/50">
+            <div className="flex items-center gap-3">
+              <div className="w-5 h-3 bg-slate-400 rounded-full"></div>
+              <span className="text-sm text-slate-300 font-medium">Actual</span>
             </div>
             {models.map(model => (
-              <div key={model.id} className="flex items-center gap-2">
-                <div className="w-4 h-2 rounded-full" style={{ backgroundColor: model.color }}></div>
-                <span className="text-sm text-slate-300">{model.name}</span>
+              <div key={model.id} className="flex items-center gap-3">
+                <div className="w-5 h-3 rounded-full" style={{ backgroundColor: model.color }}></div>
+                <span className="text-sm text-slate-300 font-medium">{model.name}</span>
               </div>
             ))}
           </div>
         </TabsContent>
         
         <TabsContent value="bar" className="pt-2">
-          <div className="w-full h-80">
+          <div className="w-full h-96">
             <ChartContainer config={getModelConfig()}>
               <BarChart
                 data={metricData}
-                margin={{ top: 20, right: 40, left: 20, bottom: 20 }}
+                margin={{ top: 30, right: 60, left: 30, bottom: 50 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
                   dataKey="name" 
-                  tick={{ fontSize: 12 }}
-                  tickMargin={10}
+                  tick={{ fontSize: 14 }}
+                  tickMargin={15}
+                  height={50}
                 />
                 <YAxis 
                   domain={[0, 100]} 
                   tick={{ fontSize: 12 }}
-                  tickMargin={10}
+                  tickMargin={15}
+                  width={45}
                 />
                 
                 <ChartTooltip
@@ -229,21 +237,25 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ models }) =
                 
                 <Legend 
                   verticalAlign="bottom" 
-                  height={36}
-                  wrapperStyle={{ paddingTop: '20px' }}
-                  iconSize={10}
+                  height={50}
+                  wrapperStyle={{ 
+                    paddingTop: '30px',
+                    bottom: '10px',
+                    fontSize: '14px'
+                  }}
+                  iconSize={12}
                   iconType="circle"
                 />
                 
-                {models.map((model) => (
+                {models.map((model, index) => (
                   <Bar 
                     key={model.id} 
                     dataKey={model.id} 
                     fill={model.color} 
                     name={model.name}
                     radius={[4, 4, 0, 0]}
-                    barSize={40}
-                    maxBarSize={60}
+                    barSize={60}
+                    maxBarSize={80}
                   />
                 ))}
               </BarChart>
