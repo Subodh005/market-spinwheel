@@ -75,16 +75,17 @@ const Index: React.FC = () => {
           <div className="mt-8 mb-16 max-w-2xl mx-auto">
             <LivePrediction modelId="xgboost" />
           </div>
-          
-          <div className="animate-bounce text-slate-400 absolute bottom-4 left-1/2 -translate-x-1/2 cursor-pointer" onClick={scrollToSpinWheel}>
-            <ArrowDown className="w-8 h-8" />
-          </div>
         </div>
         
         {/* Floating Elements */}
         <div className="absolute top-[20%] right-[10%] w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-lg opacity-30 animate-float" />
         <div className="absolute top-[60%] left-[15%] w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20 animate-float" style={{ animationDelay: '1s' }} />
         <div className="absolute top-[30%] left-[8%] w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg opacity-25 animate-float" style={{ animationDelay: '2s' }} />
+        
+        {/* Move the arrow outside of the box and position it at the bottom of the viewport */}
+        <div className="animate-bounce text-slate-400 absolute bottom-0 left-1/2 -translate-x-1/2 transform translate-y-8 cursor-pointer" onClick={scrollToSpinWheel}>
+          <ArrowDown className="w-8 h-8" />
+        </div>
       </section>
       
       <section id="spin-wheel-section" ref={spinWheelRef} className="py-20 px-6 min-h-screen flex flex-col justify-center">
