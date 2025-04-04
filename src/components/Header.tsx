@@ -1,10 +1,18 @@
 
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BarChart3, Home, Info } from 'lucide-react';
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Prevent navigation if already on the homepage when clicking Models
+  const handleModelsClick = (e: React.MouseEvent) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+    }
+  };
   
   return (
     <header className="w-full py-4 px-6 bg-market-dark-blue/90 backdrop-blur-md fixed top-0 left-0 z-50 border-b border-slate-700/50">
@@ -21,7 +29,11 @@ const Header: React.FC = () => {
             <Home className="w-4 h-4 mr-1" />
             Home
           </NavLink>
-          <NavLink to="/models" active={location.pathname.includes("/models")}>
+          <NavLink 
+            to="/models" 
+            active={location.pathname.includes("/models")}
+            onClick={handleModelsClick}
+          >
             <BarChart3 className="w-4 h-4 mr-1" />
             Models
           </NavLink>
@@ -30,8 +42,6 @@ const Header: React.FC = () => {
             About
           </NavLink>
         </nav>
-        
-        {/* Removed settings button */}
       </div>
     </header>
   );
@@ -41,12 +51,14 @@ interface NavLinkProps {
   children: React.ReactNode;
   to: string;
   active: boolean;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ children, to, active }) => {
+const NavLink: React.FC<NavLinkProps> = ({ children, to, active, onClick }) => {
   return (
     <Link
       to={to}
+      onClick={onClick}
       className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
         active 
           ? 'bg-slate-700/50 text-white' 
