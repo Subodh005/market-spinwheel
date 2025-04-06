@@ -14,10 +14,6 @@ const Footer: React.FC = () => {
             </p>
           </div>
         </div>
-        
-        <div className="mt-8 pt-6 border-t border-slate-700/50 text-center text-sm text-slate-500">
-          &copy; {new Date().getFullYear()} Market Prediction. All rights reserved.
-        </div>
       </div>
     </footer>
   );
