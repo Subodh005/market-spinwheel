@@ -10,16 +10,21 @@ interface LivePredictionProps {
 // Alpha Vantage API is free but has strict rate limits
 const ALPHA_VANTAGE_API_KEY = 'HPMQE6H9B5WZJCJO'; // Free demo key with rate limits
 
+// Updated as of April 2025 - this will be our fallback in case the API fails
+const CURRENT_AAPL_PRICE = 183.11; 
+
 const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-forest' }) => {
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
   const [predictedPrice, setPredictedPrice] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [usingFallback, setUsingFallback] = useState(false);
   
   // Function to fetch the current AAPL stock price from Alpha Vantage API
   const fetchCurrentPrice = async () => {
     try {
+      // Try Alpha Vantage API first
       const response = await fetch(
         `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=${ALPHA_VANTAGE_API_KEY}`
       );
@@ -33,20 +38,38 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       // Check if we received the expected data format
       if (data['Global Quote'] && data['Global Quote']['05. price']) {
         const price = parseFloat(data['Global Quote']['05. price']);
+        setUsingFallback(false);
         return price;
       } else if (data.Information && data.Information.includes('API rate limit')) {
-        // Alpha Vantage returns a Note/Information field when API call limit is reached
-        throw new Error('API call frequency limit reached. Using estimated price.');
+        throw new Error('API rate limit reached');
       } else {
         throw new Error('Invalid response format from API');
       }
     } catch (err) {
       console.error('Error fetching stock price:', err);
-      // If API fails, fallback to more accurate current price
-      // Updated fallback price based on recent market data
-      const basePrice = 187.23; // Current market price as of April 2025
-      const variation = (Math.random() * 1) - 0.5; // Random variation between -0.5 and +0.5
-      return parseFloat((basePrice + variation).toFixed(2));
+      
+      // Try Yahoo Finance API as a fallback
+      try {
+        const yahooResponse = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1d');
+        
+        if (yahooResponse.ok) {
+          const yahooData = await yahooResponse.json();
+          if (yahooData.chart && yahooData.chart.result && yahooData.chart.result[0].meta) {
+            const yahooPrice = yahooData.chart.result[0].meta.regularMarketPrice;
+            if (yahooPrice) {
+              setUsingFallback(false);
+              return parseFloat(yahooPrice.toFixed(2));
+            }
+          }
+        }
+      } catch (yahooErr) {
+        console.error('Yahoo fallback also failed:', yahooErr);
+      }
+      
+      // If both APIs fail, use our hardcoded fallback with slight variation
+      setUsingFallback(true);
+      const variation = (Math.random() * 0.5) - 0.25; // Random variation between -0.25 and +0.25
+      return parseFloat((CURRENT_AAPL_PRICE + variation).toFixed(2));
     }
   };
   
@@ -99,8 +122,8 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
     // Initial data fetch
     refreshData();
     
-    // Auto-refresh every 60 seconds
-    const interval = setInterval(refreshData, 60000);
+    // Auto-refresh every 30 seconds (reduced from 60 to get more frequent updates)
+    const interval = setInterval(refreshData, 30000);
     return () => clearInterval(interval);
   }, [modelId]);
   
@@ -157,9 +180,15 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
         </div>
       </div>
       
-      {error && (
+      {usingFallback && (
+        <div className="text-xs text-amber-400 mb-2">
+          Using estimated price due to API limitations. Data may not be real-time.
+        </div>
+      )}
+      
+      {error && !usingFallback && (
         <div className="text-xs text-red-400 mb-2">
-          {error} Using estimated price.
+          {error}
         </div>
       )}
       
