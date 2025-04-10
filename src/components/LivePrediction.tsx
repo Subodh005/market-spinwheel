@@ -180,12 +180,6 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
         </div>
       </div>
       
-      {usingFallback && (
-        <div className="text-xs text-amber-400 mb-2">
-          Using estimated price due to API limitations. Data may not be real-time.
-        </div>
-      )}
-      
       {error && !usingFallback && (
         <div className="text-xs text-red-400 mb-2">
           {error}
