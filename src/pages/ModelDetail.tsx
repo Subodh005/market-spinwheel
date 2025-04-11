@@ -78,7 +78,13 @@ const ModelDetail: React.FC = () => {
         
         {/* Live prediction for this model */}
         <div className="mb-8">
-          <LivePrediction modelId={model.id} />
+          <LivePrediction 
+            modelId={model.id} 
+            symbol="AAPL" 
+            name="Apple Stock" 
+            type="stock"
+            color={model.color}
+          />
         </div>
         
         {/* Charts and metrics */}
