@@ -199,6 +199,25 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
   
   // Set default accent color based on asset type if not provided
   const accentColor = color || (type === 'crypto' ? '#f7931a' : '#0D9488');
+
+  // Format price to ensure it fits within the container
+  const formatPrice = (price: number | null) => {
+    if (price === null) return '...';
+    
+    if (type === 'crypto') {
+      // For crypto, use compact notation for large numbers
+      if (price > 1000) {
+        return `$${price.toLocaleString('en-US', { 
+          maximumFractionDigits: 2,
+          notation: price > 10000 ? 'compact' : undefined
+        })}`;
+      }
+      return `$${price.toLocaleString()}`;
+    } else {
+      // For stocks
+      return `$${price.toFixed(2)}`;
+    }
+  };
   
   return (
     <div className="p-6 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 shadow-lg relative overflow-hidden">
@@ -222,16 +241,16 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       <div className="grid grid-cols-2 gap-6 mb-4">
         <div className="bg-slate-700/50 rounded-lg p-4">
           <div className="text-sm text-slate-400 mb-1">Current Price</div>
-          <div className="text-2xl font-bold text-white">
-            {currentPrice ? (type === 'crypto' ? `$${currentPrice.toLocaleString()}` : `$${currentPrice.toFixed(2)}`) : '...'}
+          <div className="text-xl sm:text-2xl font-bold text-white truncate">
+            {formatPrice(currentPrice)}
           </div>
         </div>
         
         <div className="bg-slate-700/50 rounded-lg p-4">
           <div className="text-sm text-slate-400 mb-1">Predicted Next</div>
-          <div className="text-2xl font-bold flex items-center">
-            <span className={isPredictionHigher ? 'text-green-400' : 'text-red-400'}>
-              {predictedPrice ? (type === 'crypto' ? `$${predictedPrice.toLocaleString()}` : `$${predictedPrice.toFixed(2)}`) : '...'}
+          <div className="text-xl sm:text-2xl font-bold flex items-center">
+            <span className={`truncate ${isPredictionHigher ? 'text-green-400' : 'text-red-400'}`}>
+              {formatPrice(predictedPrice)}
             </span>
             
             {priceDifference && (
