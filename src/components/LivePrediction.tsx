@@ -200,19 +200,20 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
   // Set default accent color based on asset type if not provided
   const accentColor = color || (type === 'crypto' ? '#f7931a' : '#0D9488');
 
-  // Format price to ensure it fits within the container
+  // Improved format price function with better overflow handling
   const formatPrice = (price: number | null) => {
     if (price === null) return '...';
     
     if (type === 'crypto') {
       // For crypto, use compact notation for large numbers
-      if (price > 1000) {
+      if (price > 10000) {
+        return `$${(price / 1000).toFixed(1)}K`;
+      } else if (price > 1000) {
         return `$${price.toLocaleString('en-US', { 
-          maximumFractionDigits: 2,
-          notation: price > 10000 ? 'compact' : undefined
+          maximumFractionDigits: 1
         })}`;
       }
-      return `$${price.toLocaleString()}`;
+      return `$${price.toFixed(2)}`;
     } else {
       // For stocks
       return `$${price.toFixed(2)}`;
@@ -241,17 +242,17 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       <div className="grid grid-cols-2 gap-6 mb-4">
         <div className="bg-slate-700/50 rounded-lg p-4">
           <div className="text-sm text-slate-400 mb-1">Current Price</div>
-          <div className="text-xl sm:text-2xl font-bold text-white truncate">
+          <div className="text-xl md:text-2xl font-bold text-white overflow-hidden text-ellipsis">
             {formatPrice(currentPrice)}
           </div>
         </div>
         
         <div className="bg-slate-700/50 rounded-lg p-4">
           <div className="text-sm text-slate-400 mb-1">Predicted Next</div>
-          <div className="text-xl sm:text-2xl font-bold flex items-center">
-            <span className={`truncate ${isPredictionHigher ? 'text-green-400' : 'text-red-400'}`}>
+          <div className="flex items-center">
+            <div className={`text-xl md:text-2xl font-bold overflow-hidden text-ellipsis ${isPredictionHigher ? 'text-green-400' : 'text-red-400'}`}>
               {formatPrice(predictedPrice)}
-            </span>
+            </div>
             
             {priceDifference && (
               <span 
