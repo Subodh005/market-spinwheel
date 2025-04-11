@@ -43,14 +43,14 @@ const Index: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
             <span className="bg-gradient-to-r from-market-teal to-blue-400 bg-clip-text text-transparent">
-              Stock Market
+              Market
             </span>
             <br />
             PRICE PREDICTION
           </h1>
           
           <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Utilizing advanced machine learning models to predict stock market trends
+            Utilizing advanced machine learning models to predict stock and crypto market trends
             with high accuracy and reliability.
           </p>
           
@@ -71,9 +71,61 @@ const Index: React.FC = () => {
             </Link>
           </div>
           
-          {/* Live Prediction widget */}
-          <div className="mt-8 mb-16 max-w-2xl mx-auto">
-            <LivePrediction modelId="xgboost" />
+          {/* Live Prediction widgets */}
+          <div className="mt-8 mb-16 max-w-5xl mx-auto">
+            <h2 className="text-2xl font-bold text-white mb-6">Live Market Predictions</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Stocks */}
+              <LivePrediction 
+                modelId="xgboost" 
+                symbol="AAPL" 
+                name="Apple Stock" 
+                type="stock"
+                color="#0D9488"
+              />
+              
+              <LivePrediction 
+                modelId="neural-network" 
+                symbol="MSFT" 
+                name="Microsoft Stock" 
+                type="stock"
+                color="#0EA5E9"
+              />
+              
+              {/* Cryptocurrencies */}
+              <LivePrediction 
+                modelId="lstm" 
+                symbol="BTC" 
+                name="Bitcoin" 
+                type="crypto"
+                color="#F7931A"
+              />
+              
+              <LivePrediction 
+                modelId="random-forest" 
+                symbol="BNB" 
+                name="Binance Coin" 
+                type="crypto"
+                color="#F3BA2F"
+              />
+              
+              <LivePrediction 
+                modelId="decision-tree" 
+                symbol="ETH" 
+                name="Ethereum" 
+                type="crypto"
+                color="#627EEA"
+              />
+              
+              <LivePrediction 
+                modelId="knn" 
+                symbol="SOL" 
+                name="Solana" 
+                type="crypto"
+                color="#14F195"
+              />
+            </div>
           </div>
         </div>
         
