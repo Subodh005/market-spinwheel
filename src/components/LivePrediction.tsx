@@ -7,11 +7,8 @@ interface LivePredictionProps {
   modelId?: string; // Optional model ID to use for prediction
 }
 
-// Finnhub API offers a more generous free tier (60 API calls per minute)
-const FINNHUB_API_KEY = 'cn7j4i9r01qmse5h6c6gcn7j4i9r01qmse5h6c70'; // Free API key
-
-// Updated as of April 2025 - this will be our fallback in case the API fails
-const CURRENT_AAPL_PRICE = 183.11; 
+// Alpha Vantage API is free and provides basic stock data
+const ALPHA_VANTAGE_API_KEY = 'HPMQE6H9B5WZJCJO'; // Free demo key with rate limits
 
 const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-forest' }) => {
   const [currentPrice, setCurrentPrice] = useState<number | null>(null);
@@ -19,14 +16,12 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
   const [loading, setLoading] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [usingFallback, setUsingFallback] = useState(false);
   
-  // Function to fetch the current AAPL stock price from Finnhub API
+  // Function to fetch the current AAPL stock price from Alpha Vantage API
   const fetchCurrentPrice = async () => {
     try {
-      // Try Finnhub API first - much more reliable free tier
       const response = await fetch(
-        `https://finnhub.io/api/v1/quote?symbol=AAPL&token=${FINNHUB_API_KEY}`
+        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=${ALPHA_VANTAGE_API_KEY}`
       );
       
       if (!response.ok) {
@@ -36,52 +31,21 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       const data = await response.json();
       
       // Check if we received the expected data format
-      if (data && data.c) {
-        const price = parseFloat(data.c.toFixed(2));
-        setUsingFallback(false);
+      if (data['Global Quote'] && data['Global Quote']['05. price']) {
+        const price = parseFloat(data['Global Quote']['05. price']);
         return price;
+      } else if (data.Note) {
+        // Alpha Vantage returns a Note field when API call limit is reached
+        throw new Error('API call frequency limit reached. Please try again later.');
       } else {
         throw new Error('Invalid response format from API');
       }
     } catch (err) {
       console.error('Error fetching stock price:', err);
-      
-      // Try Alpha Vantage API as a fallback
-      try {
-        const avResponse = await fetch(
-          `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=HPMQE6H9B5WZJCJO`
-        );
-        
-        if (avResponse.ok) {
-          const avData = await avResponse.json();
-          if (avData['Global Quote'] && avData['Global Quote']['05. price']) {
-            const avPrice = parseFloat(avData['Global Quote']['05. price']);
-            setUsingFallback(false);
-            return avPrice;
-          }
-        }
-        
-        // Try Yahoo Finance API as another fallback
-        const yahooResponse = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1d');
-        
-        if (yahooResponse.ok) {
-          const yahooData = await yahooResponse.json();
-          if (yahooData.chart && yahooData.chart.result && yahooData.chart.result[0].meta) {
-            const yahooPrice = yahooData.chart.result[0].meta.regularMarketPrice;
-            if (yahooPrice) {
-              setUsingFallback(false);
-              return parseFloat(yahooPrice.toFixed(2));
-            }
-          }
-        }
-      } catch (fallbackErr) {
-        console.error('Fallback APIs also failed:', fallbackErr);
-      }
-      
-      // If all APIs fail, use our hardcoded fallback with slight variation
-      setUsingFallback(true);
-      const variation = (Math.random() * 0.2) - 0.1; // Random variation between -0.1 and +0.1
-      return parseFloat((CURRENT_AAPL_PRICE + variation).toFixed(2));
+      // If API fails, fallback to simulation with a more accurate base price
+      const basePrice = 190.5; // Using a reasonable fallback price
+      const variation = (Math.random() * 2) - 1; // Random variation between -1 and +1
+      return parseFloat((basePrice + variation).toFixed(2));
     }
   };
   
@@ -99,7 +63,6 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       'knn': 0.03,
       'cnn': 0.035,
       'lstm': 0.03,
-      'xgboost': 0.022, // XGBoost typically has good accuracy
     };
     
     // Use the specified model's coefficient, or default to a standard value
@@ -134,8 +97,8 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
     // Initial data fetch
     refreshData();
     
-    // Auto-refresh every 30 seconds (reduced from 60 to get more frequent updates)
-    const interval = setInterval(refreshData, 30000);
+    // Auto-refresh every 60 seconds
+    const interval = setInterval(refreshData, 60000);
     return () => clearInterval(interval);
   }, [modelId]);
   
@@ -192,9 +155,9 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
         </div>
       </div>
       
-      {error && !usingFallback && (
+      {error && (
         <div className="text-xs text-red-400 mb-2">
-          {error}
+          {error} Using estimated price.
         </div>
       )}
       
