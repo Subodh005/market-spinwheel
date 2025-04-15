@@ -8,7 +8,7 @@ interface LivePredictionProps {
 }
 
 // Finnhub API offers a more generous free tier (60 API calls per minute)
-const FINNHUB_API_KEY = 'c98vb4iad3id5ssn6vs0'; // Valid free API key
+const FINNHUB_API_KEY = 'cn7j4i9r01qmse5h6c6gcn7j4i9r01qmse5h6c70'; // Free API key
 
 // Updated as of April 2025 - this will be our fallback in case the API fails
 const CURRENT_AAPL_PRICE = 183.11; 
@@ -34,7 +34,6 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
       }
       
       const data = await response.json();
-      console.log('Finnhub API response:', data);
       
       // Check if we received the expected data format
       if (data && data.c) {
@@ -55,7 +54,6 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
         
         if (avResponse.ok) {
           const avData = await avResponse.json();
-          console.log('Alpha Vantage API response:', avData);
           if (avData['Global Quote'] && avData['Global Quote']['05. price']) {
             const avPrice = parseFloat(avData['Global Quote']['05. price']);
             setUsingFallback(false);
@@ -68,7 +66,6 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
         
         if (yahooResponse.ok) {
           const yahooData = await yahooResponse.json();
-          console.log('Yahoo Finance API response:', yahooData);
           if (yahooData.chart && yahooData.chart.result && yahooData.chart.result[0].meta) {
             const yahooPrice = yahooData.chart.result[0].meta.regularMarketPrice;
             if (yahooPrice) {
@@ -137,8 +134,8 @@ const LivePrediction: React.FC<LivePredictionProps> = ({ modelId = 'random-fores
     // Initial data fetch
     refreshData();
     
-    // Auto-refresh every 20 seconds (reduced for more frequent updates)
-    const interval = setInterval(refreshData, 20000);
+    // Auto-refresh every 30 seconds (reduced from 60 to get more frequent updates)
+    const interval = setInterval(refreshData, 30000);
     return () => clearInterval(interval);
   }, [modelId]);
   
